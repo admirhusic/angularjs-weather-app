@@ -1,0 +1,90 @@
+<style>
+
+</style>
+<div class="columns is-centered search">
+<div class="column is-one-third box">
+    <div class="field">
+        <div class="field has-addons">
+            <div class="control">
+                <input class="input is-large" type="text" placeholder="Traži grad..." ng-model="userInput">
+            </div>
+            <div class="control">
+                <a class="button is-info is-large" ng-click="getData()">
+                    <i class="fas fa-search"></i>
+                    Traži...
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<div class="box special-box has-background-info animated fadeIn" ng-show="resultsFound">
+        <a class="button is-success" ng-click="saveCity(result)"><i class="fa fa-plus"> </i></a>
+    <h1 ng-show="loading" class="title is-1 has-text-centered"><i class="fa fa-spinner fa-spin"></i></h1>
+    <div ng-hide="loading">
+        <h5 class="title has-text-centered"> {{result.name}}, {{result.sys.country}}</h5>
+        <p class="title has-text-centered">{{date | date:'dd/MM/yyyy'}}</p>
+
+        <div class="columns">
+            <div class="column">
+                <p class="has-text-centered">max {{result.main.temp_max}} <i class="wi wi-celsius"></i></p>
+                <h4 class="has-text-centered temperature-text"> {{result.main.temp}} <i class="wi wi-celsius"></i></h4>
+                <p class="has-text-centered">min {{result.main.temp_min}} <i class="wi wi-celsius"></i></p>
+
+            </div>
+            <div class="column">
+                <h4 class="title has-text-centered"> <i class="owf owf-{{result.weather[0].id}} owf-5x"></i></h4>
+
+                <p class="has-text-centered">{{result.weather[0].description}}</p>
+
+            </div>
+            <div class="column">
+                <div class="columns is-multiline">
+                    <div class="column is-full has-text-centered">
+                        <p><i class="wi wi-barometer"></i> {{result.main.pressure}} hPa</p>
+                    </div>
+                    <div class="column is-full has-text-centered">
+                        <p><i class="wi wi-humidity"></i> {{result.main.humidity}} % </p>
+                    </div>
+                    <div class="column is-full  has-text-centered">
+                        <p><i class="wi wi-windy"></i> {{result.wind.speed}} km/h</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="columns">
+            <div class="column is-one-half has-text-centered">
+                <p><i class="wi wi-sunrise"></i> </p>
+                <p>{{result.sys.sunrise * 1000 | date: 'HH:mm'}} h</p>
+            </div>
+            <div class="column is-one-half has-text-centered">
+                <p><i class="wi wi-sunset"></i></p>
+                <p>{{result.sys.sunset * 1000 | date: 'HH:mm'}} h</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="box has-background-info" ng-show="noResults">
+        <h4 class="title is-4 has-text-centered">Nema rezultata</h4>
+    </div>
+
+
+
+    <div class="columns is-multiline" ng-if="savedCities">
+        <div class="column is-one-third animated fadeIn" ng-repeat="city in savedCities">
+        <div class="notification is-primary is-one-third">
+                <button class="delete" ng-click="removeCity(city)"></button>
+                <h4 class="title is-4 has-text-centered">{{city.name}}, {{city.sys.country}}</h4>
+                <p class="has-text-centered temperature-text has-text-white"> {{city.main.temp}} <i class="wi wi-celsius"></i></p>
+                </div>
+        </div>
+    </div>
+   
+
+
+
+
+
+
